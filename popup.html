@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      width: 320px;
+      max-height: 480px;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 13px;
+      color: #1a1a1a;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Search */
+    .search-wrap { padding: 10px 12px 6px; display: none; }
+    .search-wrap.visible { display: block; }
+    .search {
+      width: 100%; padding: 8px 12px;
+      border: 1.5px solid #e5e5e5; border-radius: 8px;
+      font: inherit; font-size: 13px; color: #1a1a1a;
+      background: #fafafa; outline: none;
+      transition: border-color .15s, box-shadow .15s;
+    }
+    .search:focus { border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59,130,246,.1); background: #fff; }
+    .search::placeholder { color: #aaa; }
+
+    /* Tabs */
+    .tabs { display: flex; gap: 2px; padding: 0 12px; margin-bottom: 2px; }
+    .tab {
+      flex: 1; padding: 7px 0; background: none; border: none;
+      border-bottom: 2px solid transparent;
+      font: inherit; font-size: 12px; font-weight: 500;
+      color: #999; cursor: pointer; transition: color .15s, border-color .15s;
+    }
+    .tab:hover { color: #555; }
+    .tab.active { color: #3b82f6; border-bottom-color: #3b82f6; }
+    .tab-gear {
+      background: none; border: none; color: #bbb; cursor: pointer;
+      font-size: 14px; padding: 4px 8px; transition: color .15s;
+    }
+    .tab-gear:hover { color: #555; }
+
+    /* List */
+    .list-wrap { flex: 1; overflow-y: auto; padding: 4px 0; outline: none; }
+    .list-wrap::-webkit-scrollbar { width: 4px; }
+    .list-wrap::-webkit-scrollbar-thumb { background: #ddd; border-radius: 2px; }
+
+    .section-label {
+      padding: 6px 14px 4px;
+      font-size: 10px; font-weight: 600; color: #aaa;
+      text-transform: uppercase; letter-spacing: .6px;
+    }
+
+    .row {
+      display: flex; align-items: center; gap: 10px;
+      padding: 7px 14px; cursor: pointer; transition: background .06s;
+    }
+    .row:hover { background: #f5f5f5; }
+    .row.selected { background: #eff6ff; }
+
+    .row-icon {
+      width: 28px; height: 28px; border-radius: 7px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; flex-shrink: 0; background: #f0f0f0;
+    }
+    .row-body { flex: 1; min-width: 0; }
+    .row-title {
+      font-size: 13px; font-weight: 500;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .row-sub {
+      font-size: 11px; color: #999;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      margin-top: 1px;
+    }
+    .row-meta { font-size: 10px; color: #bbb; flex-shrink: 0; }
+    .row-pin { color: #f59e0b; font-size: 11px; flex-shrink: 0; }
+    .row-actions { display: flex; gap: 2px; opacity: 0; transition: opacity .1s; }
+    .row:hover .row-actions, .row.selected .row-actions { opacity: 1; }
+
+    .mini-btn {
+      background: none; border: none; cursor: pointer;
+      font-size: 13px; color: #aaa; padding: 2px 4px; border-radius: 4px; line-height: 1;
+    }
+    .mini-btn:hover { background: #eee; color: #555; }
+
+    .folder-icon { background: #fef3c7; color: #d97706; }
+    .folder-children { padding-left: 18px; }
+
+    .key-hint {
+      font-size: 10px; color: #bbb; font-weight: 600;
+      width: 14px; text-align: center; flex-shrink: 0;
+    }
+    .row.selected .key-hint { color: #3b82f6; }
+
+    .empty-state { padding: 24px 14px; text-align: center; color: #bbb; font-size: 12px; }
+
+    /* Toast */
+    .toast {
+      position: fixed; bottom: 12px; left: 50%; transform: translateX(-50%);
+      background: #1a1a1a; color: #fff; padding: 6px 16px;
+      border-radius: 8px; font-size: 12px; font-weight: 500;
+      opacity: 0; transition: opacity .2s; pointer-events: none;
+      z-index: 100;
+    }
+    .toast.show { opacity: 1; }
+
+    /* Footer */
+    .footer {
+      border-top: 1px solid #f0f0f0; padding: 6px 12px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .footer-left { display: flex; gap: 4px; }
+    .footer-btn {
+      background: none; border: none; font: inherit;
+      font-size: 11px; color: #3b82f6; cursor: pointer;
+      padding: 3px 6px; border-radius: 4px;
+    }
+    .footer-btn:hover { background: #f0f7ff; }
+    .footer-btn.danger { color: #ef4444; }
+    .footer-btn.danger:hover { background: #fef2f2; }
+    .footer-hint { font-size: 10px; color: #ccc; }
+
+    /* Editor */
+    .editor { padding: 12px; display: flex; flex-direction: column; gap: 8px; }
+    .editor-header {
+      display: flex; align-items: center; gap: 8px;
+      font-weight: 600; font-size: 14px;
+    }
+    .back-btn {
+      background: none; border: none; cursor: pointer;
+      font-size: 16px; color: #999; padding: 2px; border-radius: 4px; line-height: 1;
+    }
+    .back-btn:hover { color: #333; background: #f0f0f0; }
+    .editor input[type="text"], .editor textarea {
+      width: 100%; padding: 8px 10px;
+      border: 1.5px solid #e5e5e5; border-radius: 8px;
+      font: inherit; font-size: 13px; color: #1a1a1a;
+      background: #fafafa; outline: none; transition: border-color .15s;
+    }
+    .editor input[type="text"]:focus, .editor textarea:focus {
+      border-color: #3b82f6; background: #fff;
+    }
+    .editor textarea { min-height: 100px; resize: vertical; font-family: inherit; }
+    .editor-meta {
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 11px; color: #999;
+    }
+    .editor-meta label { display: flex; align-items: center; gap: 4px; cursor: pointer; }
+    .editor-meta input[type="checkbox"] { accent-color: #3b82f6; }
+    .editor-btns { display: flex; gap: 8px; align-items: center; }
+    .btn-primary {
+      background: #3b82f6; color: #fff; border: none;
+      padding: 7px 18px; border-radius: 8px;
+      font: inherit; font-size: 13px; font-weight: 500;
+      cursor: pointer; transition: background .15s;
+    }
+    .btn-primary:hover { background: #2563eb; }
+
+    /* Settings */
+    .settings { padding: 12px; display: flex; flex-direction: column; gap: 12px; }
+    .settings-header {
+      display: flex; align-items: center; gap: 8px;
+      font-weight: 600; font-size: 14px;
+    }
+    .setting-row {
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .setting-label { font-size: 13px; color: #555; }
+    .setting-row select {
+      background: #fafafa; color: #1a1a1a; border: 1.5px solid #e5e5e5;
+      border-radius: 6px; padding: 4px 8px; font: inherit; font-size: 13px; outline: none;
+    }
+    .setting-row select:focus { border-color: #3b82f6; }
+    .setting-row input[type="checkbox"] { accent-color: #3b82f6; width: 16px; height: 16px; }
+
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+  <div id="cn-main">
+    <div class="search-wrap" id="cn-search-wrap">
+      <input class="search" id="cn-search" placeholder="Search... ( / )" autocomplete="off">
+    </div>
+    <div class="tabs">
+      <button class="tab active" data-tab="history">History</button>
+      <button class="tab" data-tab="snippets">Snippets</button>
+      <button class="tab-gear" id="cn-settings" title="Settings">⚙</button>
+    </div>
+    <div class="list-wrap" id="cn-list" tabindex="0"></div>
+    <div class="footer">
+      <div class="footer-left">
+        <button class="footer-btn" id="cn-add-snippet">+ Snippet</button>
+        <button class="footer-btn" id="cn-add-folder">+ Folder</button>
+      </div>
+      <button class="footer-btn" id="cn-manage" title="Open full manager">Manage</button>
+    </div>
+  </div>
+
+  <div id="cn-editor" class="hidden">
+    <div class="editor">
+      <div class="editor-header">
+        <button class="back-btn" id="cn-editor-back">←</button>
+        <span id="cn-editor-title">Edit Snippet</span>
+      </div>
+      <input type="text" id="cn-editor-name" placeholder="Title">
+      <textarea id="cn-editor-content" placeholder="Content&#10;&#10;{{date}} {{time}} {{datetime}} {{clipboard}}"></textarea>
+      <div class="editor-meta">
+        <label><input type="checkbox" id="cn-editor-pinned"> Pinned</label>
+        <span id="cn-editor-chars">0 chars</span>
+      </div>
+      <div class="editor-btns">
+        <button class="btn-primary" id="cn-editor-save">Save</button>
+        <button class="footer-btn danger" id="cn-editor-delete">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="cn-folder-editor" class="hidden">
+    <div class="editor">
+      <div class="editor-header">
+        <button class="back-btn" id="cn-folder-back">←</button>
+        <span>Edit Folder</span>
+      </div>
+      <input type="text" id="cn-folder-name" placeholder="Folder name">
+      <div class="editor-btns">
+        <button class="btn-primary" id="cn-folder-save">Save</button>
+        <button class="footer-btn danger" id="cn-folder-delete">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="cn-settings-view" class="hidden">
+    <div class="settings">
+      <div class="settings-header">
+        <button class="back-btn" id="cn-settings-back">←</button>
+        <span>Settings</span>
+      </div>
+      <div class="setting-row">
+        <span class="setting-label">Max History</span>
+        <select id="cn-setting-max-history">
+          <option value="10">10</option>
+          <option value="20">20</option>
+          <option value="30">30</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </select>
+      </div>
+      <div class="setting-row">
+        <span class="setting-label">Auto Paste</span>
+        <input type="checkbox" id="cn-setting-auto-paste">
+      </div>
+      <div style="border-top:1px solid #f0f0f0; padding-top:10px; display:flex; gap:8px; flex-wrap:wrap;">
+        <button class="footer-btn" id="cn-s-import">Import</button>
+        <button class="footer-btn" id="cn-s-export">Export</button>
+        <button class="footer-btn danger" id="cn-s-clear-history">Clear History</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="cn-toast">Copied!</div>
+  <script src="popup.js"></script>
+</body>
+</html>

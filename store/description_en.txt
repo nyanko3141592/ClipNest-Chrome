@@ -1,0 +1,62 @@
+ClipNest — Clipboard History & Snippets
+
+A fast, lightweight clipboard manager that lives in your browser. Keep a running history of everything you copy, save frequently used text as snippets, and paste anything — right from the context menu.
+
+━━━ Features ━━━
+
+🖱️ Right-Click Context Menu (Main UI)
+• Right-click any text field to access History and Snippets instantly
+• Folders appear as nested submenus — your structure is preserved
+• Pinned snippets (★) stay at the top for quick access
+• Select any text on a page → right-click → "Save as snippet"
+• Clear history directly from the menu
+
+📋 Clipboard History
+• Automatically captures text you copy
+• Up to 15 recent items shown in the context menu
+• Configurable history size (10–100 items)
+
+✂️ Reusable Snippets
+• Save any text as a named snippet
+• Organize with nested folders
+• Pin important snippets to the top
+• Dynamic placeholders: {{date}}, {{time}}, {{datetime}}
+
+⌨️ Keyboard Shortcut
+• Alt+V (customizable) opens an inline panel next to your cursor
+• Arrow keys, Enter, Tab — navigate without touching the mouse
+• / to search, e to edit, s to save history as snippet
+
+🖱️ Toolbar Popup
+• Click the ClipNest icon to browse and manage history & snippets
+• Works even on chrome:// and other restricted pages
+
+🔒 Privacy
+• All data stays local in your browser (chrome.storage.local)
+• No accounts, no servers, no tracking
+• Zero external dependencies — pure vanilla JS
+
+━━━ How to Use ━━━
+
+1. Copy text as usual — ClipNest captures it automatically
+2. Right-click a text field → ClipNest → pick from History or Snippets
+3. The text is pasted directly into the field
+4. Select text anywhere → right-click → "Save as snippet" to build your library
+
+━━━ Keyboard Shortcuts (inline panel) ━━━
+
+↑ ↓       Navigate items
+Enter     Paste selected item
+1–9       Quick-select
+Tab       Switch between Snippets ↔ History
+→ ←       Expand / collapse folders
+/         Toggle search
+e         Edit selected item
+s         Save history item as snippet
+Esc       Close
+
+━━━ Permissions ━━━
+
+• storage — Save your clipboard history and snippets locally
+• activeTab / scripting — Show the inline panel and paste text into pages
+• contextMenus — Add ClipNest to the right-click menu

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>ClipNest</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <!-- Top nav -->
+  <header class="topbar">
+    <div class="topbar-left">
+      <span class="logo">📋 ClipNest</span>
+      <nav class="nav-tabs">
+        <button class="nav-tab active" data-view="snippets">Snippets</button>
+        <button class="nav-tab" data-view="history">History</button>
+        <button class="nav-tab" data-view="settings">Settings</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ═══ Snippets view ═══ -->
+  <div class="view active" id="view-snippets">
+    <div class="split">
+      <!-- Left: tree -->
+      <aside class="sidebar">
+        <div class="sidebar-toolbar">
+          <button class="tb-btn" id="btn-add-snippet" title="New Snippet">+ Snippet</button>
+          <button class="tb-btn" id="btn-add-folder" title="New Folder">+ Folder</button>
+          <span class="spacer"></span>
+          <button class="tb-btn icon" id="btn-import" title="Import">⬆</button>
+          <button class="tb-btn icon" id="btn-export" title="Export">⬇</button>
+        </div>
+        <div class="tree" id="tree"></div>
+      </aside>
+
+      <!-- Right: editor -->
+      <main class="editor-pane" id="editor-pane">
+        <div class="empty-editor" id="editor-empty">
+          <p>Select a snippet or folder to edit</p>
+          <p class="hint">Or create a new one with the buttons on the left</p>
+        </div>
+
+        <!-- Snippet editor -->
+        <div class="editor hidden" id="snippet-editor">
+          <div class="editor-row">
+            <label>Title</label>
+            <input type="text" id="ed-title" placeholder="Snippet title">
+          </div>
+          <div class="editor-row grow">
+            <label>Content</label>
+            <textarea id="ed-content" placeholder="Snippet content&#10;&#10;Placeholders: {{date}} {{time}} {{datetime}}"></textarea>
+          </div>
+          <div class="editor-footer">
+            <label class="check-label"><input type="checkbox" id="ed-pinned"> Pinned</label>
+            <div class="editor-meta">
+              <select id="ed-folder" title="Parent folder"></select>
+              <span id="ed-chars">0 chars</span>
+            </div>
+          </div>
+          <div class="editor-actions">
+            <button class="btn primary" id="ed-save">Save</button>
+            <button class="btn danger" id="ed-delete">Delete</button>
+          </div>
+        </div>
+
+        <!-- Folder editor -->
+        <div class="editor hidden" id="folder-editor">
+          <div class="editor-row">
+            <label>Folder Name</label>
+            <input type="text" id="fed-title" placeholder="Folder name">
+          </div>
+          <div class="editor-row">
+            <label>Parent</label>
+            <select id="fed-parent"></select>
+          </div>
+          <div class="folder-info" id="fed-info"></div>
+          <div class="editor-actions">
+            <button class="btn primary" id="fed-save">Save</button>
+            <button class="btn danger" id="fed-delete">Delete Folder</button>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- ═══ History view ═══ -->
+  <div class="view" id="view-history">
+    <div class="history-toolbar">
+      <input type="text" class="search-input" id="history-search" placeholder="Search history...">
+      <button class="btn danger" id="btn-clear-history">Clear All</button>
+    </div>
+    <div class="history-list" id="history-list"></div>
+  </div>
+
+  <!-- ═══ Settings view ═══ -->
+  <div class="view" id="view-settings">
+    <div class="settings-card">
+      <h2>Settings</h2>
+      <div class="setting">
+        <span class="setting-label">Max History Items</span>
+        <select id="set-max-history">
+          <option value="10">10</option>
+          <option value="20">20</option>
+          <option value="30">30</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </select>
+      </div>
+      <div class="setting">
+        <span class="setting-label">Auto Paste (inline panel)</span>
+        <input type="checkbox" id="set-auto-paste">
+      </div>
+      <div class="setting">
+        <span class="setting-label">Keyboard Shortcut</span>
+        <div class="hotkey-row">
+          <span class="hotkey-display" id="set-hotkey">⌥V</span>
+          <button class="btn small" id="set-hotkey-record">Record</button>
+        </div>
+      </div>
+      <div class="setting-actions">
+        <button class="btn primary" id="set-save">Save Settings</button>
+      </div>
+      <hr>
+      <div class="about">
+        <p>ClipNest v<span id="set-version"></span></p>
+        <p class="hint">All data is stored locally in your browser. No servers, no tracking.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <!-- Hidden file input for import -->
+  <input type="file" id="file-input" accept=".json" style="display:none">
+
+  <script src="options.js"></script>
+</body>
+</html>

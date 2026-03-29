@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ClipNest — Privacy Policy</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; max-width: 640px; margin: 40px auto; padding: 0 20px; color: #333; line-height: 1.7; }
+    h1 { font-size: 24px; margin-bottom: 8px; }
+    h2 { font-size: 18px; margin-top: 32px; }
+    .date { color: #888; font-size: 14px; margin-bottom: 32px; }
+    ul { padding-left: 20px; }
+    li { margin-bottom: 4px; }
+  </style>
+</head>
+<body>
+  <h1>ClipNest — Privacy Policy</h1>
+  <p class="date">Last updated: March 30, 2026</p>
+
+  <h2>Overview</h2>
+  <p>ClipNest is a clipboard history and snippet manager for Chrome. It is designed with privacy as a core principle — all data stays on your device and is never transmitted externally.</p>
+
+  <h2>Data Storage</h2>
+  <p>ClipNest stores the following data locally in your browser using <code>chrome.storage.local</code>:</p>
+  <ul>
+    <li><strong>Clipboard history</strong> — text you have copied, stored temporarily for quick re-access</li>
+    <li><strong>Snippets</strong> — text you have saved manually as reusable snippets</li>
+    <li><strong>Settings</strong> — your preferences (keyboard shortcut, history size, auto-paste toggle)</li>
+  </ul>
+
+  <h2>Data Collection</h2>
+  <p>ClipNest does <strong>not</strong> collect, transmit, or share any user data. Specifically:</p>
+  <ul>
+    <li>No data is sent to any external server</li>
+    <li>No analytics or tracking of any kind</li>
+    <li>No user accounts or authentication</li>
+    <li>No third-party services or SDKs</li>
+    <li>No remote code execution</li>
+  </ul>
+
+  <h2>Permissions</h2>
+  <ul>
+    <li><strong>storage</strong> — to save clipboard history, snippets, and settings locally in the browser</li>
+    <li><strong>activeTab</strong> — to show the inline paste panel on the currently active tab when triggered by the user</li>
+    <li><strong>scripting</strong> — to inject the content script that enables the inline panel and paste functionality on pages where it is not pre-loaded</li>
+    <li><strong>contextMenus</strong> — to add ClipNest items to the right-click menu for quick access to history and snippets</li>
+    <li><strong>Host permissions (all_urls)</strong> — the content script runs on all pages so the inline paste panel and clipboard chip are available wherever the user types</li>
+  </ul>
+
+  <h2>Data Deletion</h2>
+  <p>You can delete all stored data at any time:</p>
+  <ul>
+    <li>Clear clipboard history from the right-click menu or the management page</li>
+    <li>Delete individual snippets or folders from the management page</li>
+    <li>Uninstalling the extension removes all stored data</li>
+  </ul>
+
+  <h2>Changes</h2>
+  <p>If this privacy policy is updated, the changes will be reflected on this page with an updated date.</p>
+
+  <h2>Contact</h2>
+  <p>If you have questions about this privacy policy, please open an issue on the project's GitHub repository.</p>
+</body>
+</html>
